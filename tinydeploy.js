@@ -16,19 +16,18 @@ const log = req => {
   console.log(new Date(), req.header("user-agent"), req.url);
 };
 
-app.get("/deploy", (req, res) => {
+app.get("/deploy", async (req, res) => {
   log(req);
   console.log(config.scripts);
-  config.scripts.map(async script => {
-    await exec(script, (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-      }
-      if (stderr) {
-        console.error(stderr);
-      }
-      console.log(stdout);
-    });
+  const script = config.scripts.join("\n");
+  await exec(script, (err, stdout, stderr) => {
+    if (err) {
+      console.error(err);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
+    console.log(stdout);
   });
 
   res.header("Content-Type", "application/json");
