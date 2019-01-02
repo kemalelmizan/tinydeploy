@@ -1,0 +1,8 @@
+{
+  "scripts": [
+    "echo tinydeploy started",
+    "cd $PROJECTDIR",
+    "git pull origin master",
+    "pm2 restart $PROJECTNAME"
+  ]
+}
